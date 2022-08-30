@@ -1,17 +1,11 @@
 <template>
-  <Filter />
+  <div>chacter</div>
 </template>
-
 <script lang="ts">
   import { defineComponent } from 'vue'
-  import Filter from '../components/Filter.vue'
 
   export default defineComponent({
-    name: 'Home',
-    components: {
-      Filter,
-    },
+    name: 'Character',
   })
 </script>
-
 <style></style>

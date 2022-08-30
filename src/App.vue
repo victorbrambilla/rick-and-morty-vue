@@ -3,5 +3,13 @@
 </script>
 <template>
   <Header />
+  <main>
+    <router-view></router-view>
+  </main>
 </template>
-<style scoped></style>
+<style scoped>
+  main {
+    height: calc(100vh - 150px);
+    padding: 0 100px;
+  }
+</style>
