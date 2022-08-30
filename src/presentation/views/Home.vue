@@ -1,6 +1,9 @@
 <template>
   <Filter />
-  <div class="containerItems">
+  <progress v-if="loading" class="progress is-small is-primary mt-5" max="100">
+    15%
+  </progress>
+  <div class="containerItems" v-if="!loading">
     <Card
       v-for="character in characters"
       :key="character.id"
@@ -8,7 +11,7 @@
     />
   </div>
 
-  <Paginator />
+  <Paginator v-if="!loading" />
 </template>
 
 <script lang="ts">
@@ -30,6 +33,7 @@
       store.dispatch(GET_CHARACTERS)
       return {
         characters: computed(() => store.state.character),
+        loading: computed(() => store.state.loading),
       }
     },
   })
