@@ -1,8 +1,10 @@
 import { createApp } from 'vue'
-import './style.css'
 import App from './App.vue'
 import router from './presentation/router/routes'
-import '@fortawesome/fontawesome-free/css/all.css'
 import { key, store } from '@/presentation/store'
+import VueAwesomePaginate from 'vue-awesome-paginate'
 
-createApp(App).use(router).use(store, key).mount('#app')
+import './style.css'
+import '@fortawesome/fontawesome-free/css/all.css'
+
+createApp(App).use(router).use(VueAwesomePaginate).use(store, key).mount('#app')

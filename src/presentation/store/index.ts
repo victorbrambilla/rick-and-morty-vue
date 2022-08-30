@@ -13,7 +13,7 @@ import {
   SET_FILTER_VALUE,
   SET_LOADING,
   SET_PAGE,
-  SET_TOTAL_PAGE,
+  SET_TOTAL_COUNT,
 } from '@/presentation/store/mutationsType'
 import { InjectionKey } from 'vue'
 import { createStore, Store, useStore as vuexUseStore } from 'vuex'
@@ -21,7 +21,7 @@ import { createStore, Store, useStore as vuexUseStore } from 'vuex'
 export interface IStore {
   character: CharacterModel[]
   page: number
-  totalPage: number
+  count: number
   filterType: string
   filterValue: string
   loading: boolean
@@ -31,7 +31,7 @@ export const key: InjectionKey<Store<IStore>> = Symbol()
 
 export const store = createStore<IStore>({
   state: {
-    totalPage: 0,
+    count: 0,
     character: [],
     page: 1,
     filterType: 'nenhum',
@@ -45,8 +45,8 @@ export const store = createStore<IStore>({
     [SET_PAGE](state, payload: number) {
       state.page = payload
     },
-    [SET_TOTAL_PAGE](state, payload: number) {
-      state.totalPage = payload
+    [SET_TOTAL_COUNT](state, payload: number) {
+      state.count = payload
     },
     [SET_FILTER_TYPE](state, payload: string) {
       state.filterType = payload
@@ -71,7 +71,7 @@ export const store = createStore<IStore>({
             })
             .then((response) => {
               commit(SET_CHARACTERS, response?.results)
-              commit(SET_TOTAL_PAGE, response?.info.pages)
+              commit(SET_TOTAL_COUNT, response?.info.count)
               commit(SET_LOADING, false)
             })
           break
@@ -84,7 +84,7 @@ export const store = createStore<IStore>({
             })
             .then((response) => {
               commit(SET_CHARACTERS, response?.results)
-              commit(SET_TOTAL_PAGE, response?.info.pages)
+              commit(SET_TOTAL_COUNT, response?.info.count)
               commit(SET_LOADING, false)
             })
           break
@@ -97,7 +97,7 @@ export const store = createStore<IStore>({
             })
             .then((response) => {
               commit(SET_CHARACTERS, response?.results)
-              commit(SET_TOTAL_PAGE, response?.info.pages)
+              commit(SET_TOTAL_COUNT, response?.info.count)
               commit(SET_LOADING, false)
             })
           break
@@ -110,7 +110,7 @@ export const store = createStore<IStore>({
             })
             .then((response) => {
               commit(SET_CHARACTERS, response?.results)
-              commit(SET_TOTAL_PAGE, response?.info.pages)
+              commit(SET_TOTAL_COUNT, response?.info.count)
               commit(SET_LOADING, false)
             })
           break
@@ -122,7 +122,7 @@ export const store = createStore<IStore>({
             })
             .then((response) => {
               commit(SET_CHARACTERS, response?.results)
-              commit(SET_TOTAL_PAGE, response?.info.pages)
+              commit(SET_TOTAL_COUNT, response?.info.count)
               commit(SET_LOADING, false)
             })
           break
@@ -132,7 +132,7 @@ export const store = createStore<IStore>({
   getters: {
     characters: (state) => state.character,
     page: (state) => state.page,
-    totalPage: (state) => state.totalPage,
+    count: (state) => state.count,
     filterType: (state) => state.filterType,
     filterValue: (state) => state.filterValue,
     loading: (state) => state.loading,
