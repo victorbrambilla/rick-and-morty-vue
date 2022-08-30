@@ -1,11 +1,7 @@
 <script setup lang="ts">
-
+  import Header from './components/Header.vue'
 </script>
-
 <template>
-
-<div>oi</div>
+  <Header />
 </template>
-
-<style scoped>
-</style>
+<style scoped></style>
