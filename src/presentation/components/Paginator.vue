@@ -2,7 +2,7 @@
   <vue-awesome-paginate
     :total-items="count"
     :items-per-page="20"
-    :max-pages-shown="5"
+    :max-pages-shown="windowWidth > 768 ? 5 : 2"
     :current-page="page"
     :on-click="onClickHandler"
   />
@@ -15,6 +15,7 @@
     name: 'Paginator',
     setup() {
       const store = useStore()
+      const windowWidth = window.innerWidth
       const onClickHandler = (page: number) => {
         store.commit('SET_PAGE', page)
         store.dispatch('GET_CHARACTERS')
@@ -23,6 +24,7 @@
         onClickHandler,
         page: computed(() => store.state.page),
         count: computed(() => store.state.count),
+        windowWidth: computed(() => windowWidth),
       }
     },
   })
@@ -56,5 +58,15 @@
   }
   .active-page:hover {
     background-color: #00d1b2;
+  }
+  @media (max-width: 768px) {
+    .pagination-container {
+      row-gap: 10px;
+    }
+    .paginate-buttons {
+      height: 40px;
+      width: 40px;
+      font-size: 14px;
+    }
   }
 </style>

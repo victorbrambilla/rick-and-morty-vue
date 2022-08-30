@@ -12,4 +12,9 @@
     min-height: calc(100vh - 150px);
     padding: 0 100px;
   }
+  @media (max-width: 768px) {
+    main {
+      padding: 0 20px;
+    }
+  }
 </style>

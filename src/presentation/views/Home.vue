@@ -48,4 +48,9 @@
     gap: 30px;
     margin-top: 40px;
   }
+  @media (max-width: 768px) {
+    .containerItems {
+      justify-content: center;
+    }
+  }
 </style>

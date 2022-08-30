@@ -57,4 +57,22 @@
   .button {
     width: 100%;
   }
+  @media (max-width: 768px) {
+    .card {
+      width: 200px;
+      min-height: 300px;
+    }
+    .card-image {
+      min-height: 200px;
+    }
+  }
+  @media (max-width: 425px) {
+    .card {
+      width: 250px;
+      min-height: 250px;
+    }
+    .card-image {
+      min-height: 250px;
+    }
+  }
 </style>
