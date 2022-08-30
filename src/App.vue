@@ -9,7 +9,7 @@
 </template>
 <style scoped>
   main {
-    height: calc(100vh - 150px);
+    min-height: calc(100vh - 150px);
     padding: 0 100px;
   }
 </style>
