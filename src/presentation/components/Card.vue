@@ -1,32 +1,19 @@
 <template>
   <div>
-    <div class="card">
-      <div class="card-image">
-        <figure class="image is-4by3">
-          <img :src="character.image" alt="Character image" />
-        </figure>
-      </div>
-      <div class="card-content">
-        <div class="media">
-          <div class="media-content">
-            <p class="title is-4">{{ character.name }}</p>
-          </div>
+    <q-card class="my-card">
+      <img :src="character.image" />
+      <q-card-section>
+        <div class="text-h5">{{ character.name }}</div>
+        <div class="text-subtitle2">
+          <span class="text-h7">Status:</span>
+          {{ character.status }}{{ character.status === 'Alive' ? '🟢' : '🔴' }}
         </div>
+      </q-card-section>
 
-        <div class="content">
-          <strong>Status: </strong>{{ character.status
-          }}{{ character.status === 'Alive' ? '🟢' : '🔴' }}
-        </div>
-      </div>
-      <footer class="card-footer">
-        <button
-          @click="seeCharacter"
-          class="button is-primary card-footer-item"
-        >
-          Ver
-        </button>
-      </footer>
-    </div>
+      <q-card-actions vertical align="center">
+        <q-btn class="button" color="primary" @click="seeCharacter">Ver</q-btn>
+      </q-card-actions>
+    </q-card>
   </div>
 </template>
 
@@ -59,39 +46,14 @@
 </script>
 
 <style scoped>
-  .card {
-    width: 300px;
-
-    border-radius: 30px !important;
-    min-height: 400px;
-  }
-  .card-image {
-    min-height: 300px;
-  }
-  .card-image img {
-    width: 100%;
-    height: auto !important;
-    border-radius: 30px !important;
+  .my-card {
+    border-radius: 15px;
   }
   .button {
     width: 100%;
   }
   @media (max-width: 768px) {
-    .card {
-      width: 200px;
-      min-height: 300px;
-    }
-    .card-image {
-      min-height: 200px;
-    }
   }
   @media (max-width: 425px) {
-    .card {
-      width: 250px;
-      min-height: 250px;
-    }
-    .card-image {
-      min-height: 250px;
-    }
   }
 </style>
