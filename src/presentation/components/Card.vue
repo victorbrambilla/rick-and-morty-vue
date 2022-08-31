@@ -19,7 +19,12 @@
         </div>
       </div>
       <footer class="card-footer">
-        <button class="button is-primary card-footer-item">Ver</button>
+        <button
+          @click="seeCharacter"
+          class="button is-primary card-footer-item"
+        >
+          Ver
+        </button>
       </footer>
     </div>
   </div>
@@ -28,6 +33,7 @@
 <script lang="ts">
   import { CharacterModel } from '@/domain/models'
   import { defineComponent, PropType } from 'vue'
+  import { useRouter } from 'vue-router'
   export default defineComponent({
     name: 'Card',
     props: {
@@ -36,10 +42,23 @@
         required: true,
       },
     },
+
+    setup(props) {
+      const router = useRouter()
+      const seeCharacter = () => {
+        router.push({
+          name: 'Character',
+          params: { id: props.character.id },
+        })
+      }
+      return {
+        seeCharacter,
+      }
+    },
   })
 </script>
 
-<style>
+<style scoped>
   .card {
     width: 300px;
 
