@@ -1,72 +1,52 @@
 <template>
   <div class="Acontainer">
-    <div class="field">
-      <label class="label is-medium">Filtrar Por</label>
-      <div class="control">
-        <div class="select is-rounded is-primary is-medium">
-          <select
-            class="inputSelect"
-            :value="filterType"
-            @input="setFilterType($event)"
-          >
-            <option v-for="filter in FilterTypes" :value="filter.value">
-              {{ filter.label }}
-            </option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <div
-      class="select is-rounded is-primary is-medium"
+    <q-select
+      contained
+      v-model="filterTypeRef"
+      :options="FilterTypes"
+      style="width: 100%"
+      label="Filtrar Por"
+    />
+
+    <q-select
       v-if="filterType === 'status'"
-    >
-      <select class="inputSelect" @input="setFilterValue($event)">
-        <option value="">Filtrar por status</option>
-        <option v-for="item in status" :value="item.value">
-          {{ item.label }}
-        </option>
-      </select>
-    </div>
+      contained
+      v-model="filterValueRef"
+      :options="status"
+      style="width: 100%"
+      label="Filtrar Por Status"
+    />
 
-    <div
-      class="select is-rounded is-primary is-medium"
+    <q-select
       v-if="filterType === 'genero'"
-    >
-      <select class="inputSelect" @input="setFilterValue($event)">
-        <option value="">Filtrar por gênero</option>
-        <option v-for="item in genders" :value="item.value">
-          {{ item.label }}
-        </option>
-      </select>
-    </div>
+      contained
+      v-model="filterValueRef"
+      :options="genders"
+      style="width: 100%"
+      label="Filtrar Por Gênero"
+    />
 
-    <div
-      class="select is-rounded is-primary is-medium"
+    <q-select
       v-if="filterType === 'especie'"
-    >
-      <select class="inputSelect" @input="setFilterValue($event)">
-        <option value="">Filtrar por espécie</option>
-        <option v-for="item in species" :value="item.value">
-          {{ item.label }}
-        </option>
-      </select>
-    </div>
+      contained
+      v-model="filterValueRef"
+      :options="species"
+      style="width: 100%"
+      label="Filtrar Por Espécie"
+    />
 
-    <div class="field" v-if="filterType === 'nome'">
-      <p class="control has-icons-right has-icons-right">
-        <input
-          class="input is-rounded is-primary is-medium"
-          type="text"
-          placeholder="Filtrar por nome"
-          is-rounded
-          is-primary
-          @input="setFilterValue($event)"
-        />
-        <span class="icon is-small is-right">
-          <i class="fas fa-search"></i>
-        </span>
-      </p>
-    </div>
+    <q-input
+      v-if="filterType === 'nome'"
+      contained
+      debounce="1000"
+      type="text"
+      v-model="(filterValueRef as string)"
+      label="Filtrar por nome"
+    >
+      <template v-slot:append>
+        <q-icon name="search" />
+      </template>
+    </q-input>
   </div>
 </template>
 <script lang="ts">
@@ -90,23 +70,46 @@
       const store = useStore()
       const type = computed(() => store.state.filterType)
 
+      const filterTypeRef = computed({
+        get: () => FilterTypes.filter((item) => item.value === type.value)[0],
+        set: (value: any) => store.commit(SET_FILTER_TYPE, value.value),
+      })
+
+      const filterValueRef = computed({
+        get: () => {
+          if (type.value === 'status') {
+            return status.filter(
+              (item) => item.value === store.state.filterValue
+            )[0]
+          }
+          if (type.value === 'genero') {
+            return genders.filter(
+              (item) => item.value === store.state.filterValue
+            )[0]
+          }
+          if (type.value === 'especie') {
+            return species.filter(
+              (item) => item.value === store.state.filterValue
+            )[0]
+          }
+          if (type.value === 'nome') {
+            return store.state.filterValue
+          }
+        },
+        set: (value: any) => {
+          console.log(value)
+          store.commit(SET_FILTER_VALUE, value.value || value),
+            store.commit(SET_PAGE, 1)
+          store.dispatch(GET_CHARACTERS)
+        },
+      })
       watch(type, (newValue: string, oldValue: string) => {
-        console.log(oldValue, newValue)
         if (newValue == 'nenhum') {
           store.commit(SET_FILTER_TYPE, 'nenhum')
           store.commit(SET_FILTER_VALUE, '')
           store.dispatch(GET_CHARACTERS)
         }
       })
-
-      const setFilterType = (event: any) => {
-        store.commit(SET_FILTER_TYPE, event?.target?.value)
-      }
-      const setFilterValue = (event: any) => {
-        store.commit(SET_FILTER_VALUE, event?.target?.value)
-        store.commit(SET_PAGE, 1)
-        store.dispatch(GET_CHARACTERS)
-      }
 
       return {
         FilterTypes,
@@ -115,8 +118,8 @@
         species,
         filterType: type,
         filterValue: computed(() => store.state.filterValue),
-        setFilterType,
-        setFilterValue,
+        filterTypeRef,
+        filterValueRef,
       }
     },
   })
