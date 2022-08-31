@@ -97,7 +97,6 @@
           }
         },
         set: (value: any) => {
-          console.log(value)
           store.commit(SET_FILTER_VALUE, value.value || value),
             store.commit(SET_PAGE, 1)
           store.dispatch(GET_CHARACTERS)
