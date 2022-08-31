@@ -21,6 +21,7 @@
       v-if="filterType === 'status'"
     >
       <select class="inputSelect" @input="setFilterValue($event)">
+        <option value="">Filtrar por status</option>
         <option v-for="item in status" :value="item.value">
           {{ item.label }}
         </option>
@@ -32,6 +33,7 @@
       v-if="filterType === 'genero'"
     >
       <select class="inputSelect" @input="setFilterValue($event)">
+        <option value="">Filtrar por gênero</option>
         <option v-for="item in genders" :value="item.value">
           {{ item.label }}
         </option>
@@ -43,6 +45,7 @@
       v-if="filterType === 'especie'"
     >
       <select class="inputSelect" @input="setFilterValue($event)">
+        <option value="">Filtrar por espécie</option>
         <option v-for="item in species" :value="item.value">
           {{ item.label }}
         </option>
@@ -77,6 +80,7 @@
   import {
     SET_FILTER_TYPE,
     SET_FILTER_VALUE,
+    SET_PAGE,
   } from '@/presentation/store/mutationsType'
   import { GET_CHARACTERS } from '@/presentation/store/actionsType'
 
@@ -86,8 +90,9 @@
       const store = useStore()
       const type = computed(() => store.state.filterType)
 
-      watch(type, (oldValue: string, newValue: string) => {
-        if (oldValue !== newValue && newValue !== 'nenhum') {
+      watch(type, (newValue: string, oldValue: string) => {
+        console.log(oldValue, newValue)
+        if (newValue == 'nenhum') {
           store.commit(SET_FILTER_TYPE, 'nenhum')
           store.commit(SET_FILTER_VALUE, '')
           store.dispatch(GET_CHARACTERS)
@@ -99,6 +104,7 @@
       }
       const setFilterValue = (event: any) => {
         store.commit(SET_FILTER_VALUE, event?.target?.value)
+        store.commit(SET_PAGE, 1)
         store.dispatch(GET_CHARACTERS)
       }
 
